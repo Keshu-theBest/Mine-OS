@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Predictive Maintenance — MineOS AI</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="app-shell-sidebar"></aside>
+  <header class="topbar" id="app-shell-topbar"></header>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Predictive Maintenance</h1>
+      <div class="page-header__meta">6 assets monitored · click a row for detail</div>
+    </div>
+
+    <div class="panel panel--flush">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Equipment</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th class="num">RUL</th>
+            <th class="num">Failure risk</th>
+          </tr>
+        </thead>
+        <tbody id="equipment-rows"></tbody>
+      </table>
+    </div>
+
+    <div class="panel" id="detail-panel" style="display:none;">
+      <div class="section-title" id="detail-title"></div>
+      <div class="grid grid--2col">
+        <div>
+          <div class="label" style="margin-bottom:var(--space-2);">Remaining useful life</div>
+          <div class="metric__value" id="detail-rul" style="margin-bottom:var(--space-5);"></div>
+          <div class="label" style="margin-bottom:var(--space-2);">Failure probability (30 days)</div>
+          <div class="confidence"><div class="confidence__track" style="width:140px;" id="detail-fail-track"></div><div class="confidence__val" id="detail-fail-val"></div></div>
+        </div>
+        <div>
+          <div class="label" style="margin-bottom:var(--space-2);">Sensor trend (7 readings)</div>
+          <canvas id="detail-chart" height="140"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/data/mock/maintenance.js"></script>
+<script src="js/services/api.js"></script>
+<script src="js/components/chartPanel.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/pages/maintenance.js"></script>
+</body>
+</html>

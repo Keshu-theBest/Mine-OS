@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fleet Intelligence — MineOS AI</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="app-shell-sidebar"></aside>
+  <header class="topbar" id="app-shell-topbar"></header>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Fleet Intelligence</h1>
+      <button class="btn btn--primary" id="optimize-btn">Optimize dispatch</button>
+    </div>
+
+    <div class="grid grid--2col">
+      <div class="panel panel--flush">
+        <div class="map-panel" id="fleet-map" style="height:420px;"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title">Dispatch queue</div>
+        <table class="data-table">
+          <thead><tr><th>Truck</th><th>Route</th><th class="num">ETA</th></tr></thead>
+          <tbody id="dispatch-rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/data/mock/fleet.js"></script>
+<script src="js/services/api.js"></script>
+<script src="js/components/mapPanel.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/pages/fleet.js"></script>
+</body>
+</html>

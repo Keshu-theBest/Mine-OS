@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MineOS AI — Decision Intelligence for MOIL</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/pages/landing.css" />
+</head>
+<body>
+
+<div class="landing">
+  <div class="landing__visual" aria-hidden="true">
+    <svg viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="lgrid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E5E4DF" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="600" height="800" fill="#F3F3F1"/>
+      <rect width="600" height="800" fill="url(#lgrid)"/>
+      <path d="M0,520 L120,300 L210,430 L300,180 L390,360 L480,120 L600,300 L600,800 L0,800 Z" fill="#FFFFFF" stroke="#E5E4DF" stroke-width="1.5"/>
+      <path d="M0,620 L150,460 L260,560 L360,380 L470,520 L600,420 L600,800 L0,800 Z" fill="#E7E6E1" opacity="0.9"/>
+    </svg>
+  </div>
+
+  <div class="landing__panel">
+    <div class="landing__brand">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <path d="M3 20 L8 6 L12 14 L16 4 L21 20 Z" fill="none" stroke="#A8672B" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+      <span>MineOS AI</span>
+    </div>
+
+    <h1 class="landing__headline">Sign in to MineOS AI</h1>
+    <p class="landing__sub">Operational decision support for Balaghat Mine Complex — exploration, production, maintenance, and fleet in one view.</p>
+
+    <form class="landing__form" id="login-form">
+      <div class="field">
+        <label for="email">Work email</label>
+        <input type="email" id="email" placeholder="manager@moil.nic.in" />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" />
+      </div>
+      <button type="submit" class="btn btn--primary landing__submit">Sign in</button>
+      <a href="dashboard.html" class="landing__demo-link">Continue with demo data</a>
+    </form>
+
+    <p class="landing__footnote">Prototype build for SIH 2026 · Problem Statement 26009</p>
+  </div>
+</div>
+
+<script>
+  document.getElementById("login-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    window.location.href = "dashboard.html";
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Decision Intelligence — MineOS AI</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="app-shell-sidebar"></aside>
+  <header class="topbar" id="app-shell-topbar"></header>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Decision Intelligence</h1>
+      <div class="page-header__meta">Fused output from all AI modules — human approval required</div>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <button class="tab is-active" data-tab="pending">Pending</button>
+      <button class="tab" data-tab="history">History</button>
+    </div>
+
+    <div id="module-filter" class="toolbar toolbar--wrap"></div>
+
+    <div class="rec-list" id="rec-feed"></div>
+  </main>
+</div>
+
+<script src="js/data/mock/recommendations.js"></script>
+<script src="js/services/api.js"></script>
+<script src="js/components/recommendationCard.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/pages/decision-center.js"></script>
+</body>
+</html>

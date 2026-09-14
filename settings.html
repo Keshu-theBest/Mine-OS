@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Settings — MineOS AI</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="app-shell-sidebar"></aside>
+  <header class="topbar" id="app-shell-topbar"></header>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Settings</h1>
+    </div>
+
+    <div class="tabs" id="settings-tabs">
+      <button class="tab is-active" data-tab="data-sources">Data sources</button>
+      <button class="tab" data-tab="sites">Mine sites</button>
+      <button class="tab" data-tab="users">User roles</button>
+    </div>
+
+    <div class="panel" id="pane-data-sources">
+      <div class="section-title">Connected systems</div>
+      <div id="conn-list"></div>
+    </div>
+
+    <div class="panel" id="pane-sites" style="display:none;">
+      <div class="ticker-row"><span>Balaghat Mine Complex</span><span class="badge badge--good ml-auto">active</span></div>
+      <div class="ticker-row"><span>Gumgaon Mine</span><span class="badge badge--neutral ml-auto">inactive</span></div>
+      <div class="ticker-row"><span>Ukwa Mine</span><span class="badge badge--neutral ml-auto">inactive</span></div>
+    </div>
+
+    <div class="panel" id="pane-users" style="display:none;">
+      <table class="data-table">
+        <thead><tr><th>Name</th><th>Role</th><th>Access</th></tr></thead>
+        <tbody>
+          <tr><td>Mine Manager</td><td>Manager</td><td>Full — can approve recommendations</td></tr>
+          <tr><td>Site Geologist</td><td>Analyst</td><td>Exploration</td></tr>
+          <tr><td>Fleet Supervisor</td><td>Operator</td><td>Fleet, Alerts</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<script src="js/data/mock/twin.js"></script>
+<script src="js/services/api.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/pages/settings.js"></script>
+</body>
+</html>

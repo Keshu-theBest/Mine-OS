@@ -1,0 +1,91 @@
+.exploration-layout {
+  display: grid;
+  gap: var(--space-5);
+  width: 100%;
+}
+
+.exploration-layout .map-panel {
+  height: min(620px, calc(100vh - 180px));
+  min-height: 480px;
+  cursor: default;
+}
+
+.zone-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: pointer;
+}
+.zone-item:last-child { border-bottom: none; }
+.zone-item:hover .zone-item__name { color: var(--accent); }
+.zone-item__name { font-size: 13.5px; font-weight: 500; }
+.zone-item__id { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); }
+
+.india-map__marker { outline: none; cursor: default; }
+.india-map__marker:focus .india-map__marker,
+.india-map__marker:focus { opacity: 0.8; }
+.india-map__markers.is-hidden { display: none; }
+.india-map__marker-label { display: none; pointer-events: none; font-weight: 500; }
+.india-map__dot { fill: #000000; stroke: none; filter: none; }
+.india-map__heatmap { pointer-events: none; mix-blend-mode: multiply; }
+.india-map__state-boundaries path {
+  fill: none;
+  stroke: #AFAEA6;
+  stroke-width: 0.75;
+  stroke-dasharray: 2 2;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+.india-map__marker:hover .india-map__marker-label,
+.india-map__marker:focus .india-map__marker-label { display: block; }
+.map-panel__tooltip--india { max-width: 220px; white-space: normal; line-height: 1.4; }
+.map-panel__tooltip--india strong,
+.map-panel__tooltip--india span { display: block; }
+.map-panel__tooltip--india strong { color: #FFFFFF; font-weight: 600; }
+.map-panel__tooltip--india span { color: #D8D7D0; font-size: 11px; }
+.map-panel__tooltip--india b { color: #FFFFFF; font-weight: 500; }
+.india-map__show-points {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 2;
+  min-width: 64px;
+  height: 32px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--accent-dim);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--accent-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  box-shadow: var(--shadow-elevated);
+}
+.india-map__show-points:hover { background: var(--accent-wash); border-color: var(--accent); }
+.india-map__controls {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-elevated);
+}
+.india-map__controls button {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 7px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+.india-map__controls button:hover { background: var(--surface-2); color: var(--text); }
+.india-map__controls button:last-child { font-size: var(--text-xs); }

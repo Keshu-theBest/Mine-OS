@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Executive Dashboard — MineOS AI</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/pages/dashboard.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="app-shell-sidebar"></aside>
+  <header class="topbar" id="app-shell-topbar"></header>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Executive Dashboard</h1>
+      <div class="page-header__meta">Balaghat Mine Complex · updated <span id="updated-at">—</span></div>
+    </div>
+
+    <div class="metrics-row" id="kpi-row"></div>
+
+    <div class="grid grid--2col">
+      <div class="panel">
+        <div class="section-title">Site overview <span class="count">5 zones</span></div>
+        <div class="map-panel" id="dash-map" style="height:280px;"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title">Production trend</div>
+        <div class="chart-panel">
+          <canvas id="dash-chart" height="200"></canvas>
+          <div class="chart-legend" id="dash-chart-legend"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid--2col">
+      <div class="panel">
+        <div class="section-title">Recommendations <span class="count" id="rec-count"></span></div>
+        <div class="rec-list" id="rec-feed"></div>
+        <a href="decision-center.html" class="btn btn--ghost btn--sm" style="margin-top:14px;">View all recommendations</a>
+      </div>
+      <div class="panel">
+        <div class="section-title">Alerts</div>
+        <div id="alert-ticker"></div>
+        <a href="alerts.html" class="btn btn--ghost btn--sm" style="margin-top:8px;">View alert history</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/data/mock/dashboard.js"></script>
+<script src="js/data/mock/reserves.js"></script>
+<script src="js/data/mock/production.js"></script>
+<script src="js/data/mock/recommendations.js"></script>
+<script src="js/data/mock/alerts.js"></script>
+<script src="js/services/api.js"></script>
+<script src="js/components/card.js"></script>
+<script src="js/components/chartPanel.js"></script>
+<script src="js/components/mapPanel.js"></script>
+<script src="js/components/recommendationCard.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/pages/dashboard.js"></script>
+</body>
+</html>

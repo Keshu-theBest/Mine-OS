@@ -1,0 +1,16 @@
+.doc { max-width: 640px; }
+
+.doc__section {
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--border);
+}
+.doc__section:first-child { border-top: none; padding-top: 0; }
+
+.doc__section h2 {
+  font-size: var(--text-md);
+  margin-bottom: var(--space-3);
+}
+
+.doc__section .data-table {
+  margin-top: var(--space-2);
+}

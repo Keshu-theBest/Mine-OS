@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Exploration Intelligence — MineOS AI</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/pages/exploration.css" />
+</head>
+<body>
+
+  <div id="map"></div>
+<div class="shell">
+  <aside class="sidebar" id="app-shell-sidebar"></aside>
+  <header class="topbar" id="app-shell-topbar"></header>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Exploration Intelligence</h1>
+      <button class="btn btn--primary" id="predict-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>
+        Predict new reserve
+      </button>
+    </div>
+
+    <div class="exploration-layout">
+      <div class="panel panel--flush">
+        <div class="map-panel" id="exp-map"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title">Predicted reserve zones <span class="count" id="zone-count"></span></div>
+        <div id="zone-list"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/data/mock/reserves.js"></script>
+<script src="js/services/api.js"></script>
+<script src="js/components/mapPanel.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/pages/exploration.js"></script>
+</body>
+</html>

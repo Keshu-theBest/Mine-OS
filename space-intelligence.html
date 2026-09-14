@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Space Intelligence — MineOS AI</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="app-shell-sidebar"></aside>
+  <header class="topbar" id="app-shell-topbar"></header>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Space Intelligence</h1>
+      <div class="page-header__meta">Sentinel-2 / Landsat composite</div>
+    </div>
+
+    <div class="grid grid--2col">
+      <div class="panel panel--flush">
+        <div class="map-panel__layers map-panel__layers--inline" id="layer-toggles"></div>
+        <div class="map-panel" id="space-map" style="height:380px; margin-top:12px;"></div>
+        <div style="padding:12px; display:flex; align-items:center; gap:10px;">
+          <span class="label">Timeline</span>
+          <input type="range" id="timeline" min="0" max="3" step="1" value="3" style="flex:1;" />
+          <span class="num" id="timeline-label" style="font-size:12px;">Sep</span>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-title">Environmental impact summary</div>
+        <p id="impact-text" style="font-size:13px; line-height:1.7;"></p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/data/mock/space.js"></script>
+<script src="js/services/api.js"></script>
+<script src="js/components/mapPanel.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/pages/space-intelligence.js"></script>
+</body>
+</html>

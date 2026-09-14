@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reports — MineOS AI</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="app-shell-sidebar"></aside>
+  <header class="topbar" id="app-shell-topbar"></header>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Reports</h1>
+      <div class="toolbar">
+        <select class="select">
+          <option>Last 30 days</option>
+          <option>Last quarter</option>
+          <option>Year to date</option>
+        </select>
+        <button class="btn" id="export-btn">Export CSV</button>
+        <button class="btn" id="export-pdf-btn">Export PDF</button>
+      </div>
+    </div>
+
+    <div class="metrics-row" id="report-kpis"></div>
+
+    <div class="panel">
+      <div class="section-title">Note</div>
+      <p>Export buttons are stubbed for the prototype — wiring these to real file generation is a Phase 6/7 integration task, not a frontend structural change.</p>
+    </div>
+  </main>
+</div>
+
+<script src="js/services/api.js"></script>
+<script src="js/components/card.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/pages/reports.js"></script>
+</body>
+</html>

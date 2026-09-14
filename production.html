@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Production Intelligence — MineOS AI</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="app-shell-sidebar"></aside>
+  <header class="topbar" id="app-shell-topbar"></header>
+
+  <main class="main">
+    <div class="page-header">
+      <h1>Production Intelligence</h1>
+    </div>
+
+    <div class="banner" id="shortfall-banner" style="display:none;"></div>
+
+    <div class="panel">
+      <div class="section-title" style="justify-content:space-between;">
+        <span>Actual vs. forecast</span>
+        <div class="tabs tabs--inline" id="range-tabs">
+          <button class="tab" data-range="daily">Daily</button>
+          <button class="tab" data-range="weekly">Weekly</button>
+          <button class="tab is-active" data-range="monthly">Monthly</button>
+        </div>
+      </div>
+      <div class="chart-panel">
+        <canvas id="prod-chart" height="260"></canvas>
+        <div class="chart-legend" id="prod-legend"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="section-title">Why this is happening</div>
+      <div id="factor-list"></div>
+    </div>
+  </main>
+</div>
+
+<script src="js/data/mock/production.js"></script>
+<script src="js/services/api.js"></script>
+<script src="js/components/chartPanel.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/pages/production.js"></script>
+</body>
+</html>
