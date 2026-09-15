@@ -55,7 +55,7 @@ function buildSidebar() {
       <a class="nav-link${item.href === current ? " is-active" : ""}" href="${item.href}">
         ${icon(item.icon)}
         <span class="nav-link__label">${item.label}</span>
-        ${item.status ? `<span class="nav-link__tick" data-status="${item.status}"></span>` : ""}
+        ${item.status && item.href === current ? `<span class="nav-link__tick" data-status="${item.status}"></span>` : ""}
       </a>`).join("")}
   `).join("");
 

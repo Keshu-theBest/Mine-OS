@@ -73,10 +73,10 @@ Components.Map = (() => {
           <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#232320" flood-opacity="0.18"/>
         </filter>
         <radialGradient id="reserve-heat" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#124E78" stop-opacity="0.78" />
-          <stop offset="34%" stop-color="#2E82B7" stop-opacity="0.56" />
-          <stop offset="68%" stop-color="#8ED1E8" stop-opacity="0.28" />
-          <stop offset="100%" stop-color="#E9F8FC" stop-opacity="0" />
+          <stop offset="0%" stop-color="#991B1B" stop-opacity="0.78" />
+          <stop offset="34%" stop-color="#DC2626" stop-opacity="0.56" />
+          <stop offset="68%" stop-color="#FCA5A5" stop-opacity="0.28" />
+          <stop offset="100%" stop-color="#FEE2E2" stop-opacity="0" />
         </radialGradient>
       </defs>
       <rect width="800" height="430" fill="#EAEAE6" />
@@ -108,7 +108,15 @@ Components.Map = (() => {
     const focus = { x: 400, y: 215 };
     const defaultView = { x: focus.x - 200, y: focus.y - 107.5, width: 400, height: 215 };
     let view = { ...defaultView };
+    let viewFrame = null;
     const updateView = () => svg.setAttribute("viewBox", `${view.x} ${view.y} ${view.width} ${view.height}`);
+    const scheduleViewUpdate = () => {
+      if (viewFrame) return;
+      viewFrame = requestAnimationFrame(() => {
+        viewFrame = null;
+        updateView();
+      });
+    };
     const zoomAtPoint = (scale, clientX, clientY) => {
       const rect = svg.getBoundingClientRect();
       const pointerX = view.x + ((clientX - rect.left) / rect.width) * view.width;
@@ -121,7 +129,7 @@ Components.Map = (() => {
         width,
         height
       };
-      updateView();
+      scheduleViewUpdate();
     };
     updateView();
     showPointsButton.addEventListener("click", () => {
@@ -131,7 +139,8 @@ Components.Map = (() => {
     });
     el.addEventListener("wheel", (event) => {
       event.preventDefault();
-      zoomAtPoint(event.deltaY < 0 ? 0.82 : 1.22, event.clientX, event.clientY);
+      const scale = Math.exp(Math.max(-0.12, Math.min(0.12, event.deltaY * 0.002)));
+      zoomAtPoint(scale, event.clientX, event.clientY);
     }, { passive: false });
 
     let drag = null;
@@ -147,19 +156,20 @@ Components.Map = (() => {
       updateView();
     };
     el.addEventListener("contextmenu", (event) => event.preventDefault());
-    el.addEventListener("mousedown", (event) => {
+    el.addEventListener("pointerdown", (event) => {
       if (event.button !== 2) return;
       drag = { clientX: event.clientX, clientY: event.clientY, viewX: view.x, viewY: view.y };
       el.classList.add("is-panning");
+      el.setPointerCapture(event.pointerId);
       event.preventDefault();
     });
-    window.addEventListener("mousemove", (event) => {
+    el.addEventListener("pointermove", (event) => {
       if (!drag) return;
       pendingPointer = event;
       if (!panFrame) panFrame = requestAnimationFrame(updatePan);
     });
-    window.addEventListener("mouseup", (event) => {
-      if (event.button !== 2 || !drag) return;
+    el.addEventListener("pointerup", (event) => {
+      if (!drag) return;
       const rect = svg.getBoundingClientRect();
       view.x = drag.viewX - ((event.clientX - drag.clientX) / rect.width) * view.width;
       view.y = drag.viewY - ((event.clientY - drag.clientY) / rect.height) * view.height;
@@ -169,6 +179,7 @@ Components.Map = (() => {
       updateView();
       drag = null;
       el.classList.remove("is-panning");
+      el.releasePointerCapture(event.pointerId);
     });
 
     el.querySelectorAll(".india-map__marker").forEach((marker) => {

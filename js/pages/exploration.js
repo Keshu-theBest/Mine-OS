@@ -1,35 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
   const mapEl = document.getElementById("exp-map");
   const listEl = document.getElementById("zone-list");
-  const predictBtn = document.getElementById("predict-btn");
-
-  function statusBadge(status) {
-    if (status === "confirmed") return `<span class="badge badge--good">confirmed</span>`;
-    if (status === "low-confidence") return `<span class="badge badge--watch">low confidence</span>`;
-    return `<span class="badge badge--info">predicted</span>`;
-  }
+  const listToggle = document.getElementById("zone-list-toggle");
 
   function renderList(zones) {
     document.getElementById("zone-count").textContent = zones.length;
     listEl.innerHTML = zones.map((z) => `
-      <div class="zone-item" data-id="${z.id}">
-        <div>
-          <div class="zone-item__name">${z.name}</div>
-          <div class="zone-item__id">${z.id} · ${z.location}</div>
-        </div>
-        <div style="display:flex; align-items:center; gap:10px;">
-          ${statusBadge(z.status)}
-          <div class="confidence">
-            <div class="confidence__track"><div class="confidence__fill" style="width:${z.confidence * 100}%"></div></div>
-            <div class="confidence__val">${(z.confidence * 100).toFixed(0)}%</div>
+      <details class="zone-item" data-id="${z.id}">
+        <summary>
+          <div>
+            <div class="zone-item__name">${escapeHtml(z.name)}</div>
+            <div class="zone-item__id">${z.id} · ${escapeHtml(z.location)}</div>
           </div>
-        </div>
-      </div>`).join("");
+        </summary>
+        <div class="zone-item__details">${z.details}</div>
+      </details>`).join("");
   }
 
   function load() {
     Promise.all([
-      fetch("only positive india.csv", { cache: "no-store" }).then((response) => response.text()),
+      fetch("manganese_mineral_data.csv", { cache: "no-store" }).then((response) => response.text()),
       fetch("india-osm.geojson").then((response) => response.json()),
       fetch("Indian_States.txt").then((response) => response.json())
     ]).then(([csv, geojson, statesGeoJSON]) => {
@@ -43,6 +33,20 @@ document.addEventListener("DOMContentLoaded", () => {
       renderList(data);
     });
   }
+
+  listToggle.addEventListener("click", () => {
+    const expanded = !listEl.hidden;
+    listEl.hidden = expanded;
+    listToggle.textContent = expanded ? "Show" : "Hide";
+    listToggle.setAttribute("aria-expanded", String(!expanded));
+  });
+
+  listEl.addEventListener("click", (event) => {
+    const summary = event.target.closest("summary");
+    if (!summary) return;
+    const item = summary.closest(".zone-item");
+    if (item) item.scrollIntoView({ block: "nearest" });
+  });
 
   function parseCsv(text) {
     const rows = [];
@@ -71,24 +75,61 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function toMineZones(csv) {
-    return parseCsv(csv).map((row, index) => {
-      const [rawName, longitude, latitude, belt, reserve, grade, lithology, formation, , source, depth, thickness, consistency, hostRock] = row;
-      const fid = rawName.match(/FID:\s*(\d+)/)?.[1] || String(index + 1);
-      const location = "Madhya Pradesh, India";
-      const name = rawName.replace(/\s*\(FID:.*\)/, "");
-      const detailRows = [["Location", location], ["Belt", belt], ["Reserve", reserve], ["Grade", grade], ["Lithology", lithology], ["Formation", formation], ["Source", source], ["Depth", depth], ["Thickness", thickness], ["Consistency", consistency], ["Host rock", hostRock]];
-      return { id: `MP-${fid.padStart(2, "0")}`, name: `${name} ${fid}`, location, commodity: "Manganese", longitude: Number(longitude), latitude: Number(latitude), reserve, grade, confidence: 0.9, status: "confirmed", r: 24, details: detailRows.map(([label, detail]) => `<span><b>${escapeHtml(label)}:</b> ${escapeHtml(detail)}</span>`).join("") };
+    const rows = parseCsv(csv);
+    const headers = rows.shift().map((header) => header.toUpperCase());
+    const value = (row, header) => row[headers.indexOf(header)] || "";
+    const detailLabels = {
+      GID: "GID",
+      OBJECTID: "Object ID",
+      LOCALITY: "Locality",
+      REGION: "Region",
+      STATE: "State",
+      TOPOSHEET: "Toposheet",
+      COMMODITY: "Commodity",
+      RESOURCE: "Reserve / resource",
+      GRADE: "Grade",
+      REMARKS: "Remarks",
+      AGE: "Age",
+      HOST_ROCK: "Host rock",
+      LONGITUDE: "Longitude",
+      LATITUDE: "Latitude",
+      GEOLOGY: "Geology",
+      MORPHOMETR: "Morphometry",
+      OCCURRENCE: "Occurrence",
+      STATE_RESO: "State resource share",
+      STNAME: "State name",
+      STCODE11: "State code"
+    };
+
+    return rows.map((row, index) => {
+      const id = value(row, "GID") || String(index + 1);
+      const locality = value(row, "LOCALITY") || "Unnamed occurrence";
+      const state = value(row, "STATE") || value(row, "STNAME") || "India";
+      const reserve = value(row, "RESOURCE");
+      const grade = value(row, "GRADE");
+      const detailRows = [["Location", `${locality}, ${state}`]];
+      headers.forEach((header, headerIndex) => {
+        const detail = row[headerIndex];
+        if (detail && detailLabels[header] && !(header === "LOCALITY" || header === "STATE")) {
+          detailRows.push([detailLabels[header], detail]);
+        }
+      });
+      return {
+        id: `MN-${id.padStart(4, "0")}`,
+        name: locality,
+        location: state,
+        commodity: value(row, "COMMODITY") || "Manganese",
+        longitude: Number(value(row, "LONGITUDE")),
+        latitude: Number(value(row, "LATITUDE")),
+        reserve,
+        grade,
+        confidence: 0.9,
+        status: "confirmed",
+        r: 24,
+        details: detailRows.map(([label, detail]) => `<span><b>${escapeHtml(label)}:</b> ${escapeHtml(detail)}</span>`).join("")
+      };
     });
   }
   load();
 
-  predictBtn.addEventListener("click", () => {
-    predictBtn.disabled = true;
-    predictBtn.textContent = "Running prediction…";
-    Api.runReservePrediction().then(() => {
-      predictBtn.disabled = false;
-      predictBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg> Predict new reserve`;
-      load();
-    });
-  });
 });

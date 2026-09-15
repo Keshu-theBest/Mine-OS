@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("equipment-rows").innerHTML = equipment.map((e) => `
       <tr class="is-clickable" data-id="${e.id}">
         <td>${e.name}</td>
-        <td class="num">${e.id}</td>
+        <td>${e.type}</td>
         <td><span class="badge badge--${e.status}">${statusLabel(e.status)}</span></td>
         <td class="num">${e.rulDays} d</td>
         <td class="num">${(e.failureProb * 100).toFixed(0)}%</td>

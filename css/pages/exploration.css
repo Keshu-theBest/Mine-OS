@@ -8,20 +8,66 @@
   height: min(620px, calc(100vh - 180px));
   min-height: 480px;
   cursor: default;
+  touch-action: none;
 }
 
 .zone-item {
+  border-bottom: 1px solid var(--border-soft);
+}
+.zone-item summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-3);
   padding: 12px 0;
-  border-bottom: 1px solid var(--border-soft);
   cursor: pointer;
+  list-style: none;
 }
+.zone-item summary::-webkit-details-marker { display: none; }
+.zone-item summary::before {
+  content: "+";
+  flex: 0 0 18px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  line-height: 1;
+  order: 2;
+  text-align: center;
+}
+.zone-item[open] summary::before { content: "−"; }
+.zone-item summary > div:first-child { flex: 1; min-width: 0; }
+.zone-item__details {
+  display: grid;
+  gap: 6px;
+  padding: 0 28px 14px;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+.zone-item__details span { display: block; }
+.zone-item__details b { color: var(--text); font-weight: 600; }
 .zone-item:last-child { border-bottom: none; }
-.zone-item:hover .zone-item__name { color: var(--accent); }
+.zone-item summary:hover .zone-item__name { color: var(--accent); }
+.zone-item summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
 .zone-item__name { font-size: 13.5px; font-weight: 500; }
 .zone-item__id { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); }
+
+.zone-list__toggle {
+  min-width: 56px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--accent-dim);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--accent-ink);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+}
+.zone-list__toggle:hover { background: var(--accent-wash); border-color: var(--accent); }
 
 .india-map__marker { outline: none; cursor: default; }
 .india-map__marker:focus .india-map__marker,
@@ -64,6 +110,7 @@
   box-shadow: var(--shadow-elevated);
 }
 .india-map__show-points:hover { background: var(--accent-wash); border-color: var(--accent); }
+.exploration-layout .map-panel.is-panning { cursor: grabbing; }
 .india-map__controls {
   position: absolute;
   top: var(--space-3);

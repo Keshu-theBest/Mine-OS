@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="css/base.css" />
 <link rel="stylesheet" href="css/layout.css" />
 <link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/pages/production.css" />
 </head>
 <body>
 <div class="shell">
@@ -20,25 +21,50 @@
 
     <div class="banner" id="shortfall-banner" style="display:none;"></div>
 
-    <div class="panel">
-      <div class="section-title" style="justify-content:space-between;">
-        <span>Actual vs. forecast</span>
-        <div class="tabs tabs--inline" id="range-tabs">
-          <button class="tab" data-range="daily">Daily</button>
-          <button class="tab" data-range="weekly">Weekly</button>
-          <button class="tab is-active" data-range="monthly">Monthly</button>
+    <div class="production-layout">
+      <div class="panel">
+        <div class="section-title" style="justify-content:space-between;">
+          <span>Actual vs. forecast</span>
+          <div class="tabs tabs--inline" id="range-tabs">
+            <button class="tab" data-range="daily">Daily</button>
+            <button class="tab" data-range="weekly">Weekly</button>
+            <button class="tab is-active" data-range="monthly">Monthly</button>
+          </div>
+        </div>
+        <div class="chart-panel">
+          <canvas id="prod-chart" height="260"></canvas>
+          <div class="chart-legend" id="prod-legend"></div>
         </div>
       </div>
-      <div class="chart-panel">
-        <canvas id="prod-chart" height="260"></canvas>
-        <div class="chart-legend" id="prod-legend"></div>
+
+      <div class="panel">
+        <div class="section-title">Why this is happening</div>
+        <div id="factor-list"></div>
       </div>
     </div>
 
-    <div class="panel">
-      <div class="section-title">Why this is happening</div>
-      <div id="factor-list"></div>
-    </div>
+    <section class="panel production-forecast" id="production-forecast">
+      <div class="section-title">Mine production forecast</div>
+      <div class="production-forecast__form">
+        <label class="forecast-field"><span>Mine block</span><select id="forecast-block"><option>Block A</option><option>Block B</option><option>Block C</option></select></label>
+        <label class="forecast-field"><span>Shift</span><select id="forecast-shift"><option value="morning">Morning</option><option value="afternoon">Afternoon</option><option value="night">Night</option></select></label>
+        <label class="forecast-field"><span>Ore grade (Mn %)</span><input id="forecast-grade" type="number" min="0" max="100" step="0.1" value="32"></label>
+        <label class="forecast-field"><span>7-day average (tons)</span><input id="forecast-average-7" type="number" min="0" step="1" value="1200"></label>
+        <label class="forecast-field"><span>14-day average (tons)</span><input id="forecast-average-14" type="number" min="0" step="1" value="1160"></label>
+        <label class="forecast-field"><span>30-day average (tons)</span><input id="forecast-average-30" type="number" min="0" step="1" value="1100"></label>
+        <label class="forecast-field"><span>Weather</span><select id="forecast-weather"><option value="clear">Clear</option><option value="cloudy">Cloudy</option><option value="rain">Rain</option><option value="storm">Storm</option></select></label>
+        <label class="forecast-field"><span>Equipment uptime <strong id="forecast-uptime-value">85%</strong></span><input id="forecast-uptime" type="range" min="0" max="100" value="85"></label>
+        <label class="forecast-field"><span>Daily target (tons)</span><input id="forecast-target-daily" type="number" min="0" step="1" value="1200"></label>
+        <label class="forecast-field"><span>Weekly target (tons)</span><input id="forecast-target-weekly" type="number" min="0" step="1" value="8400"></label>
+        <label class="forecast-field"><span>Monthly target (tons)</span><input id="forecast-target-monthly" type="number" min="0" step="1" value="36000"></label>
+      </div>
+      <div class="production-forecast__actions"><button class="btn btn--primary" id="generate-production-forecast" type="button">Generate forecast</button></div>
+      <div class="production-forecast__results" id="production-forecast-results" aria-live="polite">
+        <article class="forecast-result"><div class="forecast-result__header"><h3>Daily horizon</h3><span class="badge badge--neutral" data-status="daily">Not calculated</span></div><dl class="forecast-result__metrics"><div><dt>Planned target</dt><dd><span data-value="daily-target">—</span> tons</dd></div><div><dt>Predicted production</dt><dd><span data-value="daily-predicted">—</span> tons</dd></div><div><dt>Shortfall</dt><dd><span data-value="daily-shortfall">—</span> tons</dd></div></dl></article>
+        <article class="forecast-result"><div class="forecast-result__header"><h3>Weekly horizon</h3><span class="badge badge--neutral" data-status="weekly">Not calculated</span></div><dl class="forecast-result__metrics"><div><dt>Planned target</dt><dd><span data-value="weekly-target">—</span> tons</dd></div><div><dt>Predicted production</dt><dd><span data-value="weekly-predicted">—</span> tons</dd></div><div><dt>Shortfall</dt><dd><span data-value="weekly-shortfall">—</span> tons</dd></div></dl></article>
+        <article class="forecast-result"><div class="forecast-result__header"><h3>Monthly horizon</h3><span class="badge badge--neutral" data-status="monthly">Not calculated</span></div><dl class="forecast-result__metrics"><div><dt>Planned target</dt><dd><span data-value="monthly-target">—</span> tons</dd></div><div><dt>Predicted production</dt><dd><span data-value="monthly-predicted">—</span> tons</dd></div><div><dt>Shortfall</dt><dd><span data-value="monthly-shortfall">—</span> tons</dd></div></dl></article>
+      </div>
+    </section>
   </main>
 </div>
 
